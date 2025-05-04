@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-Driven Genetic Evolution Sandbox</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #111; color: #fff; padding: 20px; }
+    input { margin-left: 10px; width: 50px; }
+    .input-group { margin-bottom: 10px; }
+    .description { font-size: 0.85em; color: #ccc; }
+  </style>
+</head>
+<body>
+  <h1>AI-Driven Genetic Evolution Sandbox</h1>  <div class="input-group">1. Vaccination Rate (0: low, 0.5: medium, 1: high): <input type="number" step="0.1" id="vaccination" value="0.5"></div>
+  <div class="input-group">2. Healthcare Quality (0: poor, 0.5: average, 1: good): <input type="number" step="0.1" id="healthcare" value="0.5"></div>
+  <div class="input-group">3. Disease Outbreak Frequency (0: never, 0.5: sometimes, 1: frequent): <input type="number" step="0.1" id="disease" value="0.5"></div>
+  <div class="input-group">4. Climate Condition (0: bad, 0.5: normal, 1: ideal): <input type="number" step="0.1" id="climate" value="0.5"></div>
+  <div class="input-group">5. Food Availability (0: scarce, 0.5: adequate, 1: abundant): <input type="number" step="0.1" id="food" value="0.5"></div>
+  <div class="input-group">6. Natural Disaster Chance (0: none, 0.5: occasional, 1: frequent): <input type="number" step="0.1" id="disaster" value="0.5"></div>
+  <div class="input-group">7. Education Level (0: low, 0.5: average, 1: high): <input type="number" step="0.1" id="education" value="0.5"></div>
+  <div class="input-group">8. Population Density (0: low, 0.5: medium, 1: high): <input type="number" step="0.1" id="density" value="0.5"></div>
+  <div class="input-group">9. War/Conflict (0: no, 1: yes): <input type="number" step="0.1" id="war" value="0"></div>
+  <div class="input-group">10. Mutation Rate (0: none, 0.5: moderate, 1: high): <input type="number" step="0.1" id="mutation" value="0.1"></div>
+  <div class="input-group">11. Access to Healthcare (0: poor, 0.5: limited, 1: excellent): <input type="number" step="0.1" id="access" value="0.5"></div><button onclick="runSimulation()">Run One Generation</button>
+
+  <p id="result"></p>  <script>
+    function runSimulation() {
+      const vaccination = parseFloat(document.getElementById("vaccination").value);
+      const healthcare = parseFloat(document.getElementById("healthcare").value);
+      const disease = parseFloat(document.getElementById("disease").value);
+      const climate = parseFloat(document.getElementById("climate").value);
+      const food = parseFloat(document.getElementById("food").value);
+      const disaster = parseFloat(document.getElementById("disaster").value);
+      const education = parseFloat(document.getElementById("education").value);
+      const density = parseFloat(document.getElementById("density").value);
+      const war = parseFloat(document.getElementById("war").value);
+      const mutation = parseFloat(document.getElementById("mutation").value);
+      const access = parseFloat(document.getElementById("access").value);
+
+      let survivors = 0;
+      const population = 100;
+
+      for (let i = 0; i < population; i++) {
+        // Inverted factors where lower values are better (disease, disaster, war, mutation, density)
+        let score = 0;
+        score += vaccination * 1.2;
+        score += healthcare * 1.2;
+        score += (1 - disease) * 1.0;
+        score += climate * 1.0;
+        score += food * 1.0;
+        score += (1 - disaster) * 1.0;
+        score += education * 0.8;
+        score += (1 - density) * 0.8;
+        score += (1 - war) * 1.0;
+        score += (1 - mutation) * 0.8;
+        score += access * 1.2;
+
+        const survivalChance = score / 11.0;
+        if (Math.random() < survivalChance) {
+          survivors++;
+        }
+      }
+
+      document.getElementById("result").innerText = `Generation complete. Survivors: ${survivors} / ${population}`;
+    }
+  </script></body>
+</html>
